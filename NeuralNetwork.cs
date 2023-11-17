@@ -8,30 +8,22 @@ namespace CsAi
 
         public NeuralNetwork(NextRandomDouble random, int[] layersToCreate)
         {
-                layers = new Layer[layersToCreate.Length];
-                for (int i = 0; i < layersToCreate.Length; i++)
-                {
-                    if (i == 0)
-                    {
-                        layers[i] = new Layer(random, layersToCreate[i], 0);
-                    }
-                    else
-                    {
-                        layers[i] = new Layer(random, layersToCreate[i], layersToCreate[i - 1]);
-                    }
-                }
+            var layers = new List<Layer>();
+            layers.Add(Layer.Create(random, layersToCreate[0], 0));
+            for (int i = 1; i < layersToCreate.Length; i++)
+            {
+                layers.Add(Layer.Create(random, layersToCreate[i], layersToCreate[i - 1]));
+            }
+
+            this.layers = layers.ToArray();
         }
 
-        public double[] Fire(double[] inputs)
+        public void Fire()
         {
-            double[] activations = inputs;
-            for (int i = 0; i < layers.Length; i++)
+            for (int i = 1; i < layers.Length; i++)
             {
-                layers[i].Fire(activations);
-                activations = layers[i].Activations;
+                layers[i].Fire(layers[i-1]);
             }
-            
-            return activations;
         }
     }
 }

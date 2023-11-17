@@ -9,7 +9,7 @@ public class JsonSerializationTests
     {
         // Arrange
         NeuralNetwork neuralNetwork = new NeuralNetwork(() => 0.3, new[] { 2, 2, 2 });
-        neuralNetwork.Fire(new double[] { 1, 1 });
+        neuralNetwork.Fire();
 
         // Act
         string json = neuralNetwork.ToJson();
@@ -21,16 +21,14 @@ public class JsonSerializationTests
       ""neurons"": [
         {
           ""weights"": [],
-          ""bias"": -0.4
+          ""bias"": -0.4,
+          ""output"": 0
         },
         {
           ""weights"": [],
-          ""bias"": -0.4
+          ""bias"": -0.4,
+          ""output"": 0
         }
-      ],
-      ""activations"": [
-        0.6456563062257954,
-        0.6456563062257954
       ]
     },
     {
@@ -40,19 +38,17 @@ public class JsonSerializationTests
             -0.4,
             -0.4
           ],
-          ""bias"": -0.4
+          ""bias"": -0.4,
+          ""output"": 0.401312339887548
         },
         {
           ""weights"": [
             -0.4,
             -0.4
           ],
-          ""bias"": -0.4
+          ""bias"": -0.4,
+          ""output"": 0.401312339887548
         }
-      ],
-      ""activations"": [
-        0.28566646911405097,
-        0.28566646911405097
       ]
     },
     {
@@ -62,19 +58,17 @@ public class JsonSerializationTests
             -0.4,
             -0.4
           ],
-          ""bias"": -0.4
+          ""bias"": -0.4,
+          ""output"": 0.3271618358885832
         },
         {
           ""weights"": [
             -0.4,
             -0.4
           ],
-          ""bias"": -0.4
+          ""bias"": -0.4,
+          ""output"": 0.3271618358885832
         }
-      ],
-      ""activations"": [
-        0.34784321020752484,
-        0.34784321020752484
       ]
     }
   ]

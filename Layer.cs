@@ -5,24 +5,28 @@ namespace CsAi
         private readonly Neuron[] neurons;
         
         public  IReadOnlyList<Neuron> Neurons => neurons;
-        
-        public double[] Activations { get; }
-        
-        public Layer(NextRandomDouble random, int neurons, int axonsPerNeuron)
+
+        public Layer(Neuron[] neurons)
         {
-            Activations = new double[neurons];
-            this.neurons = new Neuron[neurons];
-            for (int i = 0; i < neurons; i++)
-            {
-                this.neurons[i] = new Neuron(random, axonsPerNeuron);
-            }
+            this.neurons = neurons;
         }
         
-        public void Fire(double[] activations)
+        public static Layer Create(NextRandomDouble random, int neuronCount, int axonsPerNeuron)
+        {
+            var neurons = new List<Neuron>();
+            for (int i = 0; i < neuronCount; i++)
+            {
+                neurons.Add(Neuron.Create(random, axonsPerNeuron));
+            }
+            
+            return new Layer(neurons.ToArray());
+        }
+        
+        public void Fire(Layer input)
         {
             for (int i = 0; i < neurons.Length; i++)
             {
-                Activations[i] = neurons[i].Fire(activations);
+                neurons[i].Fire(input.Neurons.Select(n => n.Output).ToArray());
             }
         }
     }

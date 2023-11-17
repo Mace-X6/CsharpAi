@@ -4,19 +4,30 @@ namespace CsAi
     {
         public IReadOnlyList<double> Weights => weights;
         public double Bias => bias;
+        public double Output => output;
         
         private readonly double[] weights;
         private readonly double bias;
+        private double output;
 
-        public Neuron(NextRandomDouble random, int axons)
+        public Neuron(double[] weights, double bias, double output)
         {
-            weights = new double[axons];
+            this.weights = weights;
+            this.bias = bias;
+            this.output = output;
+        }
+
+        public static Neuron Create(NextRandomDouble random, int axons)
+        {
+            double[] weights = new double[axons];
             for (int i = 0; i < axons; i++)
             {
                 weights[i] = random() * 2 - 1;
             }
             
-            bias = random() * 2 - 1;
+            double bias = random() * 2 - 1;
+
+            return new Neuron(weights, bias, 0);
         }
 
         private double Sigmoid(double x)
@@ -24,22 +35,15 @@ namespace CsAi
             return 1 / (1 + Math.Exp(-x));
         }
 
-        public double Fire(double[] activations)
+        public void Fire(double[] activations)
         {
-            double output = 0.0;
-            if (weights.Length != activations.Length)
+            double output = this.output;
+            for (int i = 0; i < activations.Length; i++)
             {
-                output = activations[0];
-            }
-            else
-            {
-                for (int i = 0; i < activations.Length; i++)
-                {
-                    output += activations[i] * weights[i];
-                }
+                output += activations[i] * weights[i];
             }
             output += bias;
-            return Sigmoid(output);
+            this.output = Sigmoid(output);
         }
     }
 }
