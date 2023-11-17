@@ -2,18 +2,21 @@ namespace CsAi
 {
     public class Neuron
     {
-        private double[] weights;
-        private double bias;
+        public IReadOnlyList<double> Weights => weights;
+        public double Bias => bias;
+        
+        private readonly double[] weights;
+        private readonly double bias;
 
-        public Neuron(int axons)
+        public Neuron(NextRandomDouble random, int axons)
         {
             weights = new double[axons];
-            Random random = new Random();
             for (int i = 0; i < axons; i++)
             {
-                weights[i] = random.NextDouble() * 2 - 1;
+                weights[i] = random() * 2 - 1;
             }
-            bias = random.NextDouble() * 2 - 1;
+            
+            bias = random() * 2 - 1;
         }
 
         private double Sigmoid(double x)

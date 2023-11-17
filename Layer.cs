@@ -2,23 +2,27 @@ namespace CsAi
 {
     public class Layer
     {
-        private Neuron[] Neurons;
-        public double[] Activations { get; private set; }
-        public Layer(int neurons, int axonsPerNeuron)
+        private readonly Neuron[] neurons;
+        
+        public  IReadOnlyList<Neuron> Neurons => neurons;
+        
+        public double[] Activations { get; }
+        
+        public Layer(NextRandomDouble random, int neurons, int axonsPerNeuron)
         {
             Activations = new double[neurons];
-            Neurons = new Neuron[neurons];
+            this.neurons = new Neuron[neurons];
             for (int i = 0; i < neurons; i++)
             {
-                Neurons[i] = new Neuron(axonsPerNeuron);
+                this.neurons[i] = new Neuron(random, axonsPerNeuron);
             }
         }
+        
         public void Fire(double[] activations)
         {
-            
-            for (int i = 0; i < Neurons.Length; i++)
+            for (int i = 0; i < neurons.Length; i++)
             {
-                Activations[i] = Neurons[i].Fire(activations);
+                Activations[i] = neurons[i].Fire(activations);
             }
         }
     }

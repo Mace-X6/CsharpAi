@@ -4,7 +4,8 @@ namespace CsAi
     {
         static void Main(string[] args)
         {
-            NeuralNetwork neuralNetwork = new NeuralNetwork(new int[3] {2, 3, 2});
+            Random random = new Random();
+            NeuralNetwork neuralNetwork = new NeuralNetwork(random.NextDouble, new int[] { 2, 3, 2 });
             Console.WriteLine(neuralNetwork);
             Console.WriteLine(neuralNetwork.ToJson());
         }
