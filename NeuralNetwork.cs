@@ -2,24 +2,24 @@ namespace CsAi
 {
     public class NeuralNetwork
     {
-        private readonly Layer[] layers;
+        private Layer[] layers;
 
         public IReadOnlyList<Layer> Layers => layers;
 
-        public NeuralNetwork(NextRandomDouble random, int[] layersToCreate)
+        public NeuralNetwork(NewDouble newDouble, int[] layersToCreate)
         {
-                layers = new Layer[layersToCreate.Length];
-                for (int i = 0; i < layersToCreate.Length; i++)
+            layers = new Layer[layersToCreate.Length];
+            for (int i = 0; i < layersToCreate.Length; i++)
+            {
+                if (i == 0)
                 {
-                    if (i == 0)
-                    {
-                        layers[i] = new Layer(random, layersToCreate[i], 0);
-                    }
-                    else
-                    {
-                        layers[i] = new Layer(random, layersToCreate[i], layersToCreate[i - 1]);
-                    }
+                    layers[i] = new Layer(newDouble, layersToCreate[i], 0);
                 }
+                else
+                {
+                    layers[i] = new Layer(newDouble, layersToCreate[i], layersToCreate[i - 1]);
+                }
+            }
         }
 
         public double[] Fire(double[] inputs)
@@ -30,8 +30,18 @@ namespace CsAi
                 layers[i].Fire(activations);
                 activations = layers[i].Activations;
             }
-            
+
             return activations;
+        }
+
+        public void ChangeWeight(int[] index, double newWeight)// [layer, neuron, weight]
+        {
+            this.layers[index[0]].Neurons[index[1]].SetWeight(index[2], newWeight);
+        }
+
+        public void ChangeBias(int[] index, double newBias)//[layer, neuron]
+        {
+            this.layers[index[0]].Neurons[index[1]].SetBias(newBias);
         }
     }
 }

@@ -5,10 +5,10 @@ namespace CsAi
         public IReadOnlyList<double> Weights => weights;
         public double Bias => bias;
         
-        private readonly double[] weights;
-        private readonly double bias;
+        private double[] weights;
+        private double bias;
 
-        public Neuron(NextRandomDouble random, int axons)
+        public Neuron(NewDouble random, int axons)
         {
             weights = new double[axons];
             for (int i = 0; i < axons; i++)
@@ -40,6 +40,14 @@ namespace CsAi
             }
             output += bias;
             return Sigmoid(output);
+        }
+
+        public void SetWeight(int index, double newWeight){
+            this.weights[index] = newWeight;
+        }
+
+        public void SetBias(double newBias){
+            this.bias = newBias;
         }
     }
 }
