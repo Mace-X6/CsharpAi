@@ -1,0 +1,3 @@
+- fix deserialization
+- implement deviation for optimization
+- implement gradient descent
