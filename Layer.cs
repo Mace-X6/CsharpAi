@@ -4,11 +4,11 @@ namespace CsAi
     {
         private readonly Neuron[] neurons;
         
-        public  IReadOnlyList<Neuron> Neurons => neurons;
+        public IReadOnlyList<Neuron> Neurons => neurons;
         
         public double[] Activations { get; }
         
-        public Layer(NextRandomDouble random, int neurons, int axonsPerNeuron)
+        public Layer(NewDouble random, int neurons, int axonsPerNeuron)
         {
             Activations = new double[neurons];
             this.neurons = new Neuron[neurons];
