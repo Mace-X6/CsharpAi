@@ -33,15 +33,5 @@ namespace CsAi
 
             return activations;
         }
-
-        public void ChangeWeight(int[] index, double newWeight)// [layer, neuron, weight]
-        {
-            this.layers[index[0]].Neurons[index[1]].SetWeight(index[2], newWeight);
-        }
-
-        public void ChangeBias(int[] index, double newBias)//[layer, neuron]
-        {
-            this.layers[index[0]].Neurons[index[1]].SetBias(newBias);
-        }
     }
 }
